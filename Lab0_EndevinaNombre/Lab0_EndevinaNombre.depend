@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1708282050 source:c:\users\corna\downloads\lab0_endevinanombre\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<stdbool.h>
+
