@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1708773029 source:c:\users\corna\desktop\lab1cb\funcions.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
+1708970455 source:c:\users\corna\desktop\lab1cb\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<time.h>
+	"funcions.h"
+
+1708773054 c:\users\corna\desktop\lab1cb\funcions.h
+
