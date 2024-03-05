@@ -28,9 +28,7 @@ void iniciar_joc(joc_t *j, char *argv[])
 
 void missatge_benvinguda(joc_t *j)
 {
-    /* COMPLETAR: donar la benvinguda i indicar el nom del jugador humà */
     printf("Benvingut al joc, %c.\n", j->nom);
-
 }
 
 void mostrar_joc(joc_t *j)
@@ -88,7 +86,7 @@ int fer_jugada(joc_t *j)
 bool hi_ha_joc(joc_t *j)
 {
     bool hi_ha_joc = true;
-    /* COMPLETAR: retornar un booleà cert si el joc segueix viu, fals si ja ha acabat */
+    /*Retornar un booleà cert si el joc segueix viu, fals si ja ha acabat */
     if ((j->punts[0] > MAX) || (j->punts[1] == MAX))
     {
         j->guanyador = 1; // Guanya la persona
@@ -105,19 +103,19 @@ bool hi_ha_joc(joc_t *j)
 // Actualitza la partida
 void actualitzar_joc(joc_t *j, int posicio)
 {
-    switch (j->torn)
+    //bool guanyador = false;
+    if (j->torn == 0)
     {
-    case 0:
-        j->punts[1] += posicio
-        break;
-    
-    case :
-        break;
+        j->punts[1] += posicio;
+        j->tauler[posicio-1]='P';
+        if (hi_ha_joc(j)) j->torn=1; //si es pot seguir jugant, actualitza el torn
     }
-    // COMPLETAR: Sumem els punts al jugador
-    // COMPLETAR: Actualitzem el tauler
-    // COMPLETAR: Mirar si hi ha guanyador
-    // COMPLETAR: Si no, actualitzem el torn
+    else
+    {
+        j->punts[0]+=posicio;
+        j->tauler[posicio-1]='O';
+        if (hi_ha_joc(j)) j->torn=0;
+    }
 }
 
 void missatge_comiat(joc_t *j)

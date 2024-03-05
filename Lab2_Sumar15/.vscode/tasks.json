@@ -8,12 +8,12 @@
                 "-fdiagnostics-color=always",
                 "-g",
                 "-o",
-                "C:/Users/corna/Desktop/FP 2/L2_Sumar15/main.exe",
-                "C:/Users/corna/Desktop/FP 2/L2_Sumar15/main.c",
-                "C:/Users/corna/Desktop/FP 2/L2_Sumar15/joc.c",
+                "C:/Users/corna/Desktop/FPII/Lab2_Sumar15/main.exe",
+                "C:/Users/corna/Desktop/FPII/Lab2_Sumar15/main.c",
+                "C:/Users/corna/Desktop/FPII/Lab2_Sumar15/joc.c",
             ],
             "options": {
-                "cwd": "C:/Users/corna/Desktop/FP 2/L2_Sumar15"
+                "cwd": "C:/Users/corna/Desktop/FPII/Lab2_Sumar15"
             },
             "problemMatcher": [
                 "$gcc"
