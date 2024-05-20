@@ -3,7 +3,7 @@
 #define USUARI_H
 
 #include <stdio.h>
- 
+  
 #define MAX_USERS 100  // Nombre m�xim d'usuaris
 #define MAX_PARELLS 10  // Nombre m�xim de suggeriments d'amistat a mostrar
 
@@ -15,6 +15,12 @@ typedef struct {
     char sexe;
     char data[11];
 } user;
+
+/* Estructura per a desar un suggeriment d'amistat */
+typedef struct {
+    int id;
+    int distancia;
+} suggeriment;
 
 /* Funcions */
 
@@ -61,8 +67,9 @@ void mostrar_amistats(int userId, user *usuaris, int numUsers, int propers[][MAX
  * @param usuaris Llista de tots els usuaris
  * @param numUsers Nombre d'usuaris al sistema
  * @param propers Matriu de proximitat
+ * @param suggeriments Llistat dels suggeriments
  */
-void suggerir_amistats(int userId, user *usuaris, int numUsers, int propers[][MAX_USERS]);
+int suggerir_amistats(int userId, user *usuaris, int numUsers, int propers[][MAX_USERS], suggeriment *suggeriments);
 
 /**
  * @brief Permet afegir amistats potencials per a l'usuari loguejat
@@ -71,7 +78,7 @@ void suggerir_amistats(int userId, user *usuaris, int numUsers, int propers[][MA
  * @param numUsers Nombre d'usuaris al sistema
  * @param propers Matriu de proximitat
  */
-void afegir_amistats(int userId, user *usuaris, int numUsers, int propers[][MAX_USERS]);
+void afegir_amistats(int userId, int amistatId, user *usuaris, int numUsers, int propers[][MAX_USERS]);
 
 /**
  * @brief Actualitza la matriu d'amistats de propers.fpb

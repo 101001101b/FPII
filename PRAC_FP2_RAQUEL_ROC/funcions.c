@@ -2,18 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "funcions.h" 
-
+ 
 #define MAX_USERS 100  // Nombre m�xim d'usuaris
 #define MAX_PARELLS 10   // Nombre m�xim de suggeriments d'amistat a mostrar
-
-/* Estructura per a desar un usuari */
-/*typedef struct {
-    int id;
-    char nom[50];
-    char poblacio[50];
-    char sexe;
-    char data[11];
-} user;*/
 
 /**
  * @brief Mostra menu amb les opcions del programa
@@ -137,26 +128,26 @@ void mostrar_amistats(int userId, user *usuaris, int numUsers, int propers[][MAX
  * @param numUsers Nombre d'usuaris al sistema
  * @param propers Matriu de proximitat
  */
-void suggerir_amistats(int userId, user *usuaris, int numUsers, int propers[][MAX_USERS]) {
-    printf("Amistats potencials:\n");
-    /* Matriu d'estructures per guardar suggeriments i les seves distancies */
-    struct {
-        int id;
-        int distancia;
-    } suggeriments[MAX_PARELLS];
-    int count = 0;  // Suggeriments trobats
+int suggerir_amistats(int userId, user *usuaris, int numUsers, int propers[][MAX_USERS], suggeriment *suggeriments) {
+
+    int sugg = 0;  // Suggeriments trobats
     /* Buscar suggeriments d'amistats basats en la distancia i que no siguin amics */
-    for (int j = 0; j < numUsers; j++) {
-        if (j != userId && propers[userId][j] > 0) {
-            suggeriments[count].id = j;
-            suggeriments[count].distancia = propers[userId][j];
-            count++;
+    for (int j = 0; j < numUsers; j++)
+    {
+        if (j != userId && propers[userId][j] > 0)
+        {
+            suggeriments[sugg].id = j;
+            suggeriments[sugg].distancia = propers[userId][j];
+            sugg++;
         }
     }
     /* Ordenar suggeriments en distancia creixent */
-    for (int i = 0; i < count - 1; i++) {
-        for (int j = i + 1; j < count; j++) {
-            if (suggeriments[i].distancia > suggeriments[j].distancia) {
+    for (int i = 0; i < sugg - 1; i++)
+    {
+        for (int j = i + 1; j < sugg; j++)
+        {
+            if (suggeriments[i].distancia > suggeriments[j].distancia)
+            {
                 /* Intercanviar les dades */
                 int tmpId = suggeriments[i].id;
                 suggeriments[i].id = suggeriments[j].id;
@@ -167,83 +158,22 @@ void suggerir_amistats(int userId, user *usuaris, int numUsers, int propers[][MA
             }
         }
     }
-    /* Mostrar els suggeriments d'amistats potencials */
-    for (int i = 0; i < count && i < MAX_PARELLS; i++) {
-        int suggId = suggeriments[i].id;
-        printf("ID: %d, Nom: %s, Distancia: %d\n", usuaris[suggId].id, usuaris[suggId].nom, suggeriments[i].distancia);
-    }
-    /* Demanar a l'usuari si vol afegir una amistat */
-    printf("\nIntroduiu l'ID de l'usuari que voleu afegir com a amic (o -1 per no afegir cap): ");
-    int id_amistat;
-    scanf("%d", &id_amistat);
-    if (id_amistat >= 0 && id_amistat < numUsers && propers[userId][id_amistat] > 0) {
-        /* Afegir l'usuari com a amic si no ho s�n */
-        propers[userId][id_amistat] = -1;
-        propers[id_amistat][userId] = -1;
-        printf("Amistat afegid.\n");
-    } else if (id_amistat == -1) {
-        printf("No s'ha afegit cap amistat.\n");
-    } else {
-        printf("ID d'usuari inv�lid o ja s�n amics.\n");
-    }
+    return sugg;
 }
 
-
 /**
- * @brief Permet a l'usuari loguejat afegir amistats potencials.
- * @param userId: ID de l'usuari loguejat.
- * @param usuaris: Llista d'usuaris.
- * @param numUsers: Nombre total d'usuaris.
- * @param propers: Matriu de proximitat.
- */
-void afegir_amistats(int userId, user *usuaris, int numUsers, int propers[][MAX_USERS]) {
-    printf("Afegir amistats:\n");
-    int suggeriments[MAX_PARELLS]; // Llista de suggeriments d'amistat
-    int distancies[MAX_PARELLS];
-    int count = 0;
-    /* Buscar suggeriments d'amistat basats en la dist�ncia */
-    for (int j = 0; j < numUsers; j++) {
-        /* Nom�s considera usuaris no amics amb dist�ncia positiva */
-        if (propers[userId][j] > 0) {
-            suggeriments[count] = j;
-            distancies[count] = propers[userId][j];
-            count++;
-        }
-    }
-    /* Ordenar suggeriments per dist�ncia creixent */
-    for (int i = 0; i < count - 1; i++) {
-        for (int j = i + 1; j < count; j++) {
-            if (distancies[i] > distancies[j]) {
-                /* Intercanvia els suggeriments amb les dist�ncies */
-                int tmp = suggeriments[i];
-                suggeriments[i] = suggeriments[j];
-                suggeriments[j] = tmp;
-
-                tmp = distancies[i];
-                distancies[i] = distancies[j];
-                distancies[j] = tmp;
-            }
-        }
-    }
-    /*Mostra suggeriments d'amistat */
-    printf("Amistats potencials:\n");
-    for (int i = 0; i < count && i < MAX_PARELLS; i++) {
-        int j = suggeriments[i];
-        printf("ID: %d, Nom: %s\n", usuaris[j].id, usuaris[j].nom);
-    }
-    /* Demanar a l'usuari si vol afegir alguna amistat */
-    printf("\nIntroduiu l'ID de l'usuari que voleu afegir com a amic (introduir -1 per no afegir-ne cap): ");
-    int id_amistat;
-    scanf("%d", &id_amistat);
-    /* Si id v�lida i no �s el mateix usuari, afegir amistat */
-    if (id_amistat >= 0 && id_amistat < numUsers && id_amistat != userId) {
-        propers[userId][id_amistat] = -1;
-        propers[id_amistat][userId] = -1;
-        printf("Amic afegit.\n");
-    } else if (id_amistat == -1) {
+*/
+void afegir_amistats(int userId, int amistatId, user *usuaris, int numUsers, int propers[][MAX_USERS])
+{
+    /* Si l'id introduit es valid i no es el mateix usuari, s'afegeir l'amistat */
+    if (amistatId >= 0 && amistatId < numUsers && amistatId != userId) {
+        propers[userId][amistatId] = -1;
+        propers[amistatId][userId] = -1;
+        printf("Amistat afegida.\n");
+    } else if (amistatId == -1) {
         printf("No s'ha afegit cap amistat.\n");
     } else {
-        printf("ID d'usuari inv�lid.\n");
+        printf("Id introduit invalid.\n");
     }
 }
 
