@@ -4,8 +4,7 @@
 
 #include <stdio.h>
   
-#define MAX_USERS 100  // Nombre m�xim d'usuaris
-#define MAX_PARELLS 10  // Nombre m�xim de suggeriments d'amistat a mostrar
+#define MAX_USERS 100000  // Nombre maxim d'usuaris
 
 /* Estructura per a desar un usuari */
 typedef struct {
@@ -48,7 +47,7 @@ int carregar_propers(int propers[MAX_USERS][MAX_USERS], const char *filename);
 
 /**
  * @brief Mostra les dades de l'usuari loguejat
- * @param usuari Usuari del qual es mostrar� el perfil
+ * @param usuari Usuari del qual es mostrara el perfil
  */
 void mostrar_perfil(user usuari);
 
@@ -69,7 +68,7 @@ void mostrar_amistats(int userId, user *usuaris, int numUsers, int propers[][MAX
  * @param propers Matriu de proximitat
  * @param suggeriments Llistat dels suggeriments
  */
-int suggerir_amistats(int userId, user *usuaris, int numUsers, int propers[][MAX_USERS], suggeriment *suggeriments);
+suggeriment* suggerir_amistats(int userId, user *usuaris, int numUsers, int propers[][MAX_USERS], int *numSugg);
 
 /**
  * @brief Permet afegir amistats potencials per a l'usuari loguejat
