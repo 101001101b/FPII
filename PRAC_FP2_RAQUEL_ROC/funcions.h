@@ -4,7 +4,7 @@
 
 #include <stdio.h>
   
-#define MAX_USERS 100000  // Nombre maxim d'usuaris
+#define MAX_USERS 10000 // Nombre maxim d'usuaris
 
 /* Estructura per a desar un usuari */
 typedef struct {

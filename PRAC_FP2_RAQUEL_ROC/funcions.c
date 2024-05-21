@@ -53,17 +53,21 @@ int carregar_usuaris(const char *filename, user usuaris[]) {
  * @param filename Nom del fitxer de dades de proximitat
  * @return Nombre d'usuaris a la matriu
  */
-int carregar_propers(int propers[MAX_USERS][MAX_USERS], const char *filename) {
+int carregar_propers(int propers[MAX_USERS][MAX_USERS], const char *filename)
+{
     FILE *file = fopen(filename, "r");
-    if (!file) {
+    if (!file)
+    {
         printf("Error en obrir el fitxer %s\n", filename);
         return -1;
     }
     int numUsers;
     fscanf(file, "%d", &numUsers); // Llegeix el nombre d'usuaris
     /* Llegeix la matriu */
-    for (int i = 0; i < numUsers; i++) {
-        for (int j = 0; j < numUsers; j++) {
+    for (int i = 0; i < numUsers; i++)
+    {
+        for (int j = 0; j < numUsers; j++)
+        {
             fscanf(file, "%d", &propers[i][j]);
         }
     }
@@ -76,15 +80,19 @@ int carregar_propers(int propers[MAX_USERS][MAX_USERS], const char *filename) {
  * @param propers Matriu de proximitat actualitzada
  * @param numUsers Nombre d'usuaris
  */
-void actualitzar_propers(int propers[MAX_USERS][MAX_USERS], int numUsers) {
+void actualitzar_propers(int propers[MAX_USERS][MAX_USERS], int numUsers)
+{
     FILE *file = fopen("propers.fpb", "w");
-    if (!file) {
+    if (!file)
+    {
         printf("Error en obrir l'arxiu propers.fpb per actualitzar.\n");
         return;
     }
     fprintf(file, "%d\n", numUsers);
-    for (int i = 0; i < numUsers; i++) {
-        for (int j = 0; j < numUsers; j++) {
+    for (int i = 0; i < numUsers; i++)
+    {
+        for (int j = 0; j < numUsers; j++)
+        {
             fprintf(file, "%d ", propers[i][j]);
         }
         fprintf(file, "\n");
@@ -135,7 +143,7 @@ suggeriment* suggerir_amistats(int userId, user *usuaris, int numUsers, int prop
     suggeriment *suggeriments = (suggeriment *)malloc(*numSugg * sizeof(suggeriment));
     if (suggeriments == NULL) {
         printf("Error en assignar memoria.\n");
-        exit(1);
+        return NULL;
     }
 
     int index = 0;
@@ -147,25 +155,19 @@ suggeriment* suggerir_amistats(int userId, user *usuaris, int numUsers, int prop
         }
     }
 
-    // Ordenar sugerencias en distancia creciente
+    /* Ordenar suggerencies en ordre creixent */
     for (int i = 0; i < *numSugg - 1; i++) {
         for (int j = i + 1; j < *numSugg; j++) {
             if (suggeriments[i].distancia > suggeriments[j].distancia) {
-                // Intercambiar las datos
-                int tmpId = suggeriments[i].id;
-                suggeriments[i].id = suggeriments[j].id;
-                suggeriments[j].id = tmpId;
-                int tmpDist = suggeriments[i].distancia;
-                suggeriments[i].distancia = suggeriments[j].distancia;
-                suggeriments[j].distancia = tmpDist;
+                /* Intercanviar les dades */
+                suggeriment temp = suggeriments[i];
+                suggeriments[i] = suggeriments[j];
+                suggeriments[j] = temp;
             }
         }
     }
-
     return suggeriments;
 }
-
-
 
 
 void afegir_amistats(int userId, int amistatId, user *usuaris, int numUsers, int propers[][MAX_USERS])

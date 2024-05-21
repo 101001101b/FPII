@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
             case 2:
                 mostrar_amistats(userId, usuaris, numUsers, propers); // Mostrar amistats de l'usuari loguejat
                 break;
-            case 3:
+            case 3: {
                 suggeriment *suggeriments = suggerir_amistats(userId, usuaris, numUsers, propers, &numSugg); // Passem el nombre de suggeriments per referencia perque la funcio el pugui modificar directament
                 if (suggeriments == NULL) {
                     printf("No hay sugerencias de amistad disponibles.\n");
@@ -63,25 +63,20 @@ int main(int argc, char *argv[]) {
                         printf("ID: %d, Nom: %s, Distancia: %d\n", usuaris[suggId].id, usuaris[suggId].nom, suggeriments[i].distancia);
                     }
                 }
-
-
-
-
-
-                
                 /* Demanar a l'usuari si vol afegir-ne algun */
                 printf("Introduiu l'ID de l'usuari que voleu afegir com a amic (o -1 per no afegir-ne cap):");
                 scanf("%d", &amistatId);
                 /* Comprovar que l'id introduit esta dins del rang*/
                 while (amistatId < 0 || amistatId >= MAX_USERS)
                 {
-                    printf("Introduiu un id valid: entre -----? i %d", MAX_USERS);
+                    printf("Introduiu un id valid: entre 0 i %d", MAX_USERS);
                     scanf("%d", &amistatId);
                 }
                 afegir_amistats(userId, amistatId, usuaris, numUsers, propers); // Afegir amistats
                 /* Alliberar memoria */
                 free(suggeriments);
                 break;
+            }
             case 4:
                 printf("Sortint del programa.\n");
                 break;
